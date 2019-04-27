@@ -4,6 +4,7 @@
   "description": "Tutorial project that will use docker to run elasticsearch against 100 literary texts in a Vue app and Koa server",
   "main": "index.js",
   "scripts": {
+    "start": "node --inspect=localhost:9229 server/app.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [
@@ -14,5 +15,12 @@
     "docker"
   ],
   "author": "Scott Wade <sc0ttwad3@gmail.com> (http://sc0ttwad3.com)",
-  "license": "MIT"
+  "license": "MIT",
+  "dependencies": {
+    "elasticsearch": "13.3.1",
+    "joi": "13.0.1",
+    "koa": "2.4.1",
+    "koa-joi-validate": "0.5.1",
+    "koa-router": "7.2.1"
+  }
 }
