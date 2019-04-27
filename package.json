@@ -1,0 +1,18 @@
+{
+  "name": "koa-elasticsearch-guttenberg-tutorial",
+  "version": "0.0.1",
+  "description": "Tutorial project that will use docker to run elasticsearch against 100 literary texts in a Vue app and Koa server",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "vue",
+    "koa",
+    "elasticsearch",
+    "tutorial",
+    "docker"
+  ],
+  "author": "Scott Wade <sc0ttwad3@gmail.com> (http://sc0ttwad3.com)",
+  "license": "MIT"
+}
