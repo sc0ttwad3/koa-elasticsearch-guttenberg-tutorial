@@ -17,7 +17,7 @@
   "author": "Scott Wade <sc0ttwad3@gmail.com> (http://sc0ttwad3.com)",
   "license": "MIT",
   "dependencies": {
-    "elasticsearch": "15.4.1",
+    "@elastic/elasticsearch": "^7.0.0-rc.2",
     "joi": "14.3.1",
     "koa": "2.7.0",
     "koa-joi-validate": "0.5.1",
