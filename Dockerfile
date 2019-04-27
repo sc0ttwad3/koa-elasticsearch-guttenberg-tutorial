@@ -65,6 +65,8 @@ WORKDIR /usr/src/app
 
 COPY package*.json ./
 
-RUN COPY . .
+RUN npm install
+
+COPY . .
 
 CMD [ "npm", "start" ]
