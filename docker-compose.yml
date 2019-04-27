@@ -3,6 +3,7 @@ version: '3'
 services:
   api: # Node.js App
     container_name: gs-api
+    image: "node:12"
     build: .
     ports:
       - "3000:3000" # Expose API port
