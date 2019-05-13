@@ -2,7 +2,7 @@ version: '3'
 
 services:
   node: # Node.js App
-    container_name:
+    container_name: "koa-node"
     image: "node:12.2"
     build: .
     ports:
@@ -10,7 +10,6 @@ services:
       - "9229:9229" # Expose Node process debug port (disable for prod)
     environment: # Set ENV vars
       - NODE_ENV=local
-      - # ES_HOST=elasticsearch
       - PORT=3000
     volumes: # Attach local book data dir
       - ./books:/usr/src/app/books
