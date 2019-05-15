@@ -1,8 +1,8 @@
 version: '3'
 
 services:
-  node: # Node.js App
-    container_name: "koa-node"
+  web: # Node.js App
+    container_name: "koa-web-1"
     image: "node:12.2"
     build: .
     ports:
@@ -11,7 +11,8 @@ services:
     environment: # Set ENV vars
       - NODE_ENV=local
       - PORT=3000
+        ES_HOST=odfe-node1
     volumes: # Attach local book data dir
       - ./books:/usr/src/app/books
-    command:
-      "npm start"
+    networks:
+        odfe-net
