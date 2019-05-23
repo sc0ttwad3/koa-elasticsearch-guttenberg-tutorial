@@ -1,4 +1,4 @@
-version: '3'
+version: "3"
 
 services: # koa-elasticsearch
   web: # Node.js App
@@ -15,7 +15,7 @@ services: # koa-elasticsearch
     volumes: # Attach local book data dir
       - ./books:/usr/src/app/books
     networks:
-        odfe-net:
+      odfe-net:
 
   odfe-node1:
     image: amazon/opendistro-for-elasticsearch:0.9.0
@@ -35,33 +35,32 @@ services: # koa-elasticsearch
       - 9200:9200
       - 9600:9600 # required for Performance Analyzer
     networks:
-        odfe-net:
+      odfe-net:
 
-
-  kibana:
-    image: amazon/opendistro-for-elasticsearch-kibana:0.8.0
-    container_name: odfe-kibana
-    ports:
-      - 5601:5601
-    expose:
-      - "5601"
-    environment:
-      ELASTICSEARCH_URL: https://odfe-node1:9200
-    volumes:
-      - ./custom-kibana.yml:/usr/share/kibana/config/kibana.yml
-    networks:
-        odfe-net:
+  #kibana:
+  #  image: amazon/opendistro-for-elasticsearch-kibana:0.8.0
+  #  container_name: odfe-kibana
+  #  ports:
+  #    - 5601:5601
+  #  expose:
+  #    - "5601"
+  #  environment:
+  #    ELASTICSEARCH_URL: https://odfe-node1:9200
+  #  volumes:
+  #    - ./custom-kibana.yml:/usr/share/kibana/config/kibana.yml
+  #  networks:
+  #    odfe-net:
 
   # elasticsearch browser
   dejavu:
     image: appbaseio/dejavu:3.2.3
     container_name: dejavu
     ports:
-    - "1358:1358"
+      - "1358:1358"
     links:
       - odfe-node1
     networks:
-        odfe-net:
+      odfe-net:
 
 volumes:
   odfe-data1:

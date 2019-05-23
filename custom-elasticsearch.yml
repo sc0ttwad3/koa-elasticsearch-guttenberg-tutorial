@@ -2,11 +2,13 @@
 http.port: 9200
 http.cors.allow-origin: http://localhost:1358,http://127.0.0.1:1358
 http.cors.enabled: true
-http.cors.allow-headers : X-Requested-With,X-Auth-Token,Content-Type,Content-Length,Authorization
+http.cors.allow-headers: X-Requested-With,X-Auth-Token,Content-Type,Content-Length,Authorization
 http.cors.allow-credentials: true
 
 ######## Start OpenDistro for Elasticsearch Security Demo Configuration ########
 # WARNING: revise all the lines below before you go into production
+# Disabling security
+opendistro_security.disabled: true
 opendistro_security.ssl.transport.pemcert_filepath: esnode.pem
 opendistro_security.ssl.transport.pemkey_filepath: esnode-key.pem
 opendistro_security.ssl.transport.pemtrustedcas_filepath: root-ca.pem
