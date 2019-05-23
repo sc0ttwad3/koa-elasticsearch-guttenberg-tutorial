@@ -17,11 +17,19 @@ services: # koa-elasticsearch
     networks:
       odfe-net:
 
+  frontend: # Nginx Server For Frontend App
+    container_name: gs-frontend
+    image: nginx
+    volumes: # Serve local "public" dir
+      - ./public:/usr/share/nginx/html
+    ports:
+      - "8080:80" # Forward site to localhost:8080
+
   odfe-node1:
     image: amazon/opendistro-for-elasticsearch:0.9.0
     container_name: odfe-node1
     environment:
-      - cluster.name=odfe-cluster
+      - discovery.type=single-node
       - bootstrap.memory_lock=true # along with the memlock settings below, disables swapping
       - "ES_JAVA_OPTS=-Xms512m -Xmx512m" # minimum and maximum Java heap size, recommend setting both to 50% of system RAM
     ulimits:
