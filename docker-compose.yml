@@ -1,37 +1,10 @@
-version: "3"
-
-services: # koa-elasticsearch
-  web: # Node.js App
-    container_name: koa-web-1
-    image: "node:12.2"
-    build: .
-    ports:
-      - "3000:3000" # Expose koa (node) port
-      - "9229:9229" # Expose Node process debug port (disable for prod)
-    environment: # Set ENV vars
-      - NODE_ENV=local
-      - PORT=3000
-        ES_HOST=odfe-node1
-    volumes: # Attach local book data dir
-      - ./books:/usr/src/app/books
-    networks:
-      odfe-net:
-
-  frontend: # Nginx Server For Frontend App
-    container_name: gs-frontend
-    image: nginx
-    volumes: # Serve local "public" dir
-      - ./public:/usr/share/nginx/html
-    ports:
-      - "8080:80" # Forward site to localhost:8080
-    networks:
-      odfe-net:
-
+version: '3'
+services:
   odfe-node1:
     image: amazon/opendistro-for-elasticsearch:0.9.0
     container_name: odfe-node1
     environment:
-      - discovery.type=single-node
+      - cluster.name=odfe-cluster
       - bootstrap.memory_lock=true # along with the memlock settings below, disables swapping
       - "ES_JAVA_OPTS=-Xms512m -Xmx512m" # minimum and maximum Java heap size, recommend setting both to 50% of system RAM
     ulimits:
@@ -40,40 +13,56 @@ services: # koa-elasticsearch
         hard: -1
     volumes:
       - odfe-data1:/usr/share/elasticsearch/data
-      - ./custom-elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml
     ports:
       - 9200:9200
       - 9600:9600 # required for Performance Analyzer
     networks:
-      odfe-net:
+      - odfe-net
 
-  #kibana:
-  #  image: amazon/opendistro-for-elasticsearch-kibana:0.8.0
-  #  container_name: odfe-kibana
-  #  ports:
-  #    - 5601:5601
-  #  expose:
-  #    - "5601"
-  #  environment:
-  #    ELASTICSEARCH_URL: https://odfe-node1:9200
-  #  volumes:
-  #    - ./custom-kibana.yml:/usr/share/kibana/config/kibana.yml
-  #  networks:
-  #    odfe-net:
+  odfe-node2:
+    image: amazon/opendistro-for-elasticsearch:0.9.0
+    container_name: odfe-node2
+    environment:
+      - cluster.name=odfe-cluster
+      - bootstrap.memory_lock=true
+      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
+      - discovery.zen.ping.unicast.hosts=odfe-node1
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+    volumes:
+      - odfe-data2:/usr/share/elasticsearch/data
+    networks:
+      - odfe-net
 
-  # elasticsearch browser
+  kibana:
+    image: amazon/opendistro-for-elasticsearch-kibana:0.9.0
+    container_name: odfe-kibana
+    ports:
+      - 5601:5601
+    expose:
+      - "5601"
+    environment:
+      ELASTICSEARCH_URL: https://odfe-node1:9200
+      ELASTICSEARCH_HOSTS: https://odfe-node1:9200
+    networks:
+      - odfe-net
+
+  # elasticsearch web gui
   dejavu:
     image: appbaseio/dejavu:3.2.3
     container_name: dejavu
     ports:
-      - "1358:1358"
+    - 1358:1358
     links:
       - odfe-node1
     networks:
-      odfe-net:
+      - odfe-net
 
 volumes:
   odfe-data1:
+  odfe-data2:
 
 networks:
   odfe-net:

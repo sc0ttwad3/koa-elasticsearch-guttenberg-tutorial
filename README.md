@@ -1,73 +1,66 @@
-# koa-elasticsearch-guttenberg-tutorial
+# opendistro-es
 
-Based on [Docker and
-Elasticsearch](https://blog.patricktriest.com/text-search-docker-elasticsearch/)
+Opendistro-for-Elasticsearch 0.9.0
 
-📚 Some important links:
+Docker-Compose setup for running elasticsearch, kibana, dejavu with persistent storage.
 
-[New elasticsearch client](https://www.elastic.co/blog/new-elasticsearch-javascript-client-released)
+## Install
 
-[Promise Essential Utils](https://github.com/blend/promise-utils)
+## Running
 
-[GUI for elasticsearch alerting](https://github.com/ServerCentral/praeco)
+### Example Operation Queries
 
-
-
-## Building the container
-
-Update the version number to match package.json entry
 
 ```
-docker build -t koa-node:v0.0.1 .
+c:\projects\docker\opendistro-es (master -> origin)
+λ curl -XGET https://localhost:9200 -u admin:admin --insecure
+{
+  "name" : "6ScgflG",
+  "cluster_name" : "odfe-cluster",
+  "cluster_uuid" : "Vk1MMjnaQvSzjoj2S54QWw",
+  "version" : {
+    "number" : "6.7.1",
+    "build_flavor" : "oss",
+    "build_type" : "tar",
+    "build_hash" : "2f32220",
+    "build_date" : "2019-04-02T15:59:27.961366Z",
+    "build_snapshot" : false,
+    "lucene_version" : "7.7.0",
+    "minimum_wire_compatibility_version" : "5.6.0",
+    "minimum_index_compatibility_version" : "5.0.0"
+  },
+  "tagline" : "You Know, for Search"
+}
+
+c:\projects\docker\opendistro-es (master -> origin)
+λ curl -XGET https://localhost:9200/_cat/nodes?v -u admin:admin --insecure
+ip         heap.percent ram.percent cpu load_1m load_5m load_15m node.role master name
+172.24.0.3           41          97  55    3.43    2.62     1.72 mdi       *      6ScgflG
+172.24.0.2           39          97  55    3.43    2.62     1.72 mdi       -      eDsUGlT
+
+c:\projects\docker\opendistro-es (master -> origin)
+λ curl -XGET https://localhost:9200/_cat/plugins?v -u admin:admin --insecure
+name    component                       version
+6ScgflG opendistro_alerting             0.9.0.0
+6ScgflG opendistro_performance_analyzer 0.9.0.0
+6ScgflG opendistro_security             0.9.0.0
+6ScgflG opendistro_sql                  0.9.0.0
+eDsUGlT opendistro_alerting             0.9.0.0
+eDsUGlT opendistro_performance_analyzer 0.9.0.0
+eDsUGlT opendistro_security             0.9.0.0
+eDsUGlT opendistro_sql                  0.9.0.0
+
+c:\projects\docker\opendistro-es (master -> origin)
+λ curl -XGET https://localhost:9200/_cat/health?v -u admin:admin --insecure
+epoch      timestamp cluster      status node.total node.data shards pri relo init unassign pending_tasks max_task_wait_time active_shards_percent
+1558634629 18:03:49  odfe-cluster green           2         2      4   2    0    0        0             0
+             -                100.0%
 ```
 
-## Starting the container/app
+## Notes
 
-Run container detached and optionally, limit the memory it can consume (the default is all the hardware CPU/RAM).
+Anything I want to specifically note.
 
-Is there a --loglevel setting to be used. None set.
+### Links
 
-```
-docker-compose up -d -m "300M" --memory-swap "1G"
-```
-
-### Docker commands cheat sheet
-
-```
-# Basic Docker Commands
-docker container --help
-docker --version
-docker version
-docker info
-docker run hello-world
-docker images # better way to get locally available images on your host/computer
-docker image ls
-
-## List Docker containers (running, all, all in quiet mode)
-docker container ls
-docker container ls --all
-docker container ls -aq
-
-# Advanced Docker Commands
-docker build -t friendlyhello .    # Create image using this directory's Dockerfile
-docker run -p 4000:80 friendlyhello   # Run "friendlyhello" mapping port 4000 to 80
-docker run -d -p 4000:80 friendlyhello           # Same thing, but in detached mode
-docker container ls                                   # List all running containers
-docker container ls -a                # List all containers, even those not running
-docker container ls -q                                      # List container IDs
-docker container stop <hash>           # Gracefully stop the specified container
-docker container kill <hash>         # Force shutdown of the specified container
-docker container rm <hash>        # Remove specified container from this machine
-docker container rm $(docker container ls -a -q)         # Remove all containers
-docker image ls -a                             # List all images on this machine
-docker image rm <image id>            # Remove specified image from this machine
-docker image rm $(docker image ls -a -q)   # Remove all images from this machine
-docker image prune                                  # remove all dangling images
-docker login             # Log in this CLI session using your Docker credentials
-docker tag <image> username/repository:tag  # Tag <image> for upload to registry
-docker push username/repository:tag            # Upload tagged image to registry
-docker run username/repository:tag                   # Run image from a registry
-
-docker inspect <task or container>                   # Inspect task or container
-docker system prune -f       # forcibly remove dangling, stopped, cache and more
-```
+[Open Distro for Elasticsearch](https://opendistro.github.io/for-elasticsearch-docs/)
