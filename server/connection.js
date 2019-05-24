@@ -3,7 +3,9 @@ const {Client} = require('@elastic/elasticsearch');
 const index = 'library';
 const type = 'novel';
 
-const client = new Client({node: 'http://localhost:9200'});
+const client = new Client({
+  node: 'https://admin:admin@localhost:9200'
+});
 
 /** Check the ES connection status */
 async function checkConnection() {
@@ -16,6 +18,8 @@ async function checkConnection() {
       isConnected = true;
     } catch (err) {
       console.log('Connection failed, retrying...', err);
+    } finally {
+      break;
     }
   }
 }
