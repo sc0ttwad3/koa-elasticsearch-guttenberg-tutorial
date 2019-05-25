@@ -30,10 +30,28 @@ app.use(async (ctx, next) => {
  * GET /search
  * Search for a term in the library
  */
-router.get('/search', async (ctx, next) => {
-  const {term, offset} = ctx.request.query;
-  ctx.body = await search.queryTerm(term, offset);
-});
+// @ts-ignore
+router.get(
+  '/search',
+  // @ts-ignore
+  validate({
+    query: {
+      term: joi
+        .string()
+        .max(60)
+        .required(),
+      offset: joi
+        .number()
+        .integer()
+        .min(0)
+        .default(0)
+    }
+  }),
+  async (ctx, next) => {
+    const {term, offset} = ctx.request.query;
+    ctx.body = await search.queryTerm(term, offset);
+  }
+);
 
 const port = process.env.PORT || 3000;
 
