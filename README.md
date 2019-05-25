@@ -64,3 +64,69 @@ Anything I want to specifically note.
 ### Links
 
 [Open Distro for Elasticsearch](https://opendistro.github.io/for-elasticsearch-docs/)
+
+## Debug
+
+This is the security related portion of the bootup of opendistro-es
+
+```
+odfe-node1    | OpenDistro for Elasticsearch Security Demo Installer
+odfe-node1    |  ** Warning: Do not use on production or public reachable systems **
+odfe-node1    | Basedir: /usr/share/elasticsearch
+odfe-node1    | Elasticsearch install type: rpm/deb on CentOS Linux release 7.6.1810 (Core)
+odfe-node1    | Elasticsearch config dir: /usr/share/elasticsearch/config
+odfe-node1    | Elasticsearch config file: /usr/share/elasticsearch/config/elasticsearch.yml
+odfe-node1    | Elasticsearch bin dir: /usr/share/elasticsearch/bin
+odfe-node1    | Elasticsearch plugins dir: /usr/share/elasticsearch/plugins
+odfe-node1    | Elasticsearch lib dir: /usr/share/elasticsearch/lib
+odfe-node1    | Detected Elasticsearch Version: x-content-6.7.1
+odfe-node1    | Detected Open Distro Security Version: 0.9.0.0
+odfe-node1    |
+odfe-node1    | ### Success
+odfe-node1    | ### Execute this script now on all your nodes and then start all nodes
+odfe-node1    | ### Open Distro Security will be automatically initialized.
+odfe-node1    | ### If you like to change the runtime configuration
+odfe-node1    | ### change the files in ../securityconfig and execute:
+odfe-node1    | "/usr/share/elasticsearch/plugins/opendistro_security/tools/securityadmin.sh" -cd "/usr/share/elasticsearch/plugins/opendistro_security/securityconfig" -icl -key "/usr/share/elasticsearch/config/kirk-key.pem" -cert "/usr/share/elasticsearch/config/kirk.pem" -cacert "/usr/share/elasticsearch/config/root-ca.pem" -nhnv
+odfe-node1    | ### or run ./securityadmin_demo.sh
+odfe-node1    | ### To use the Security Plugin ConfigurationGUI
+odfe-node1    | ### To access your secured cluster open https://<hostname>:<HTTP port> and log in with admin/admin.
+odfe-node1    | ### (Ignore the SSL certificate warning because we installed self-signed demo certificates)
+```
+
+Other warnings
+
+```
+odfe-node1    | [2019-05-24T18:13:31,344][WARN ][c.a.o.s.OpenDistroSecurityPlugin] [V4NIa4L] Directory /usr/share/elasticsearch/config has insecure file permissions (should be 0700)
+odfe-node1    | [2019-05-24T18:13:31,344][WARN ][c.a.o.s.OpenDistroSecurityPlugin] [V4NIa4L] File /usr/share/elasticsearch/config/log4j2.properties has insecure file permissions (should be 0600)
+odfe-node1    | [2019-05-24T18:13:31,345][WARN ][c.a.o.s.OpenDistroSecurityPlugin] [V4NIa4L] File /usr/share/elasticsearch/config/elasticsearch.yml has insecure file permissions (should be 0600)
+odfe-node1    | [2019-05-24T18:13:31,346][WARN ][c.a.o.s.OpenDistroSecurityPlugin] [V4NIa4L] File /usr/share/elasticsearch/config/esnode.pem has insecure file permissions (should be 0600)
+odfe-node1    | [2019-05-24T18:13:31,362][WARN ][c.a.o.s.OpenDistroSecurityPlugin] [V4NIa4L] File /usr/share/elasticsearch/config/kirk-key.pem has insecure file permissions (should be 0600)
+odfe-node1    | [2019-05-24T18:13:31,364][WARN ][c.a.o.s.OpenDistroSecurityPlugin] [V4NIa4L] File /usr/share/elasticsearch/config/esnode-key.pem has insecure file permissions (should be 0600)
+odfe-node1    | [2019-05-24T18:13:31,371][WARN ][c.a.o.s.OpenDistroSecurityPlugin] [V4NIa4L] File /usr/share/elasticsearch/config/kirk.pem has insecure file permissions (should be 0600)
+odfe-node1    | [2019-05-24T18:13:31,376][WARN ][c.a.o.s.OpenDistroSecurityPlugin] [V4NIa4L] File /usr/share/elasticsearch/config/root-ca.pem has insecure file permissions (should be 0600)
+```
+
+Built/Installed latest curl 7.65 on SPECTRE360 machine.
+
+```
+7.61.x
+(stock apt pkg pre-installed)
+------------------------------
+
+curl 7.61.0 (x86_64-pc-linux-gnu) libcurl/7.61.0 OpenSSL/1.1.1 zlib/1.2.11 libidn2/2.0.5 libpsl/0.20.2 (+libidn2/2.0.4) nghttp2/1.32.1 librtmp/2.3
+Release-Date: 2018-07-11
+Protocols: dict file ftp ftps gopher http https imap imaps ldap ldaps pop3 pop3s rtmp rtsp smb smbs smtp smtps telnet tftp
+Features: AsynchDNS IDN IPv6 Largefile GSS-API Kerberos SPNEGO NTLM NTLM_WB SSL libz TLS-SRP HTTP2 UnixSockets HTTPS-proxy PSL
+
+
+7.65.x
+------------------------------
+
+curl 7.65.0 (x86_64-pc-linux-gnu) libcurl/7.65.0 OpenSSL/1.1.1 zlib/1.2.11 libidn2/2.0.5 libpsl/0.20.2 (+libidn2/2.0.4) libssh2/1.8.0 nghttp2/1.32.1 librtmp/2.3
+Release-Date: 2019-05-22
+Protocols: dict file ftp ftps gopher http https imap imaps pop3 pop3s rtmp rtsp scp sftp smb smbs smtp smtps telnet tftp
+Features: AsynchDNS HTTP2 HTTPS-proxy IDN IPv6 Largefile libz NTLM NTLM_WB PSL SSL TLS-SRP UnixSockets
+```
+
+
