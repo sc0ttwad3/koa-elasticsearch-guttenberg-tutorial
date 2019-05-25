@@ -26,7 +26,14 @@ app.use(async (ctx, next) => {
   return next();
 });
 
-// ADD ENDPOINTS HERE
+/**
+ * GET /search
+ * Search for a term in the library
+ */
+router.get('/search', async (ctx, next) => {
+  const {term, offset} = ctx.request.query;
+  ctx.body = await search.queryTerm(term, offset);
+});
 
 const port = process.env.PORT || 3000;
 
