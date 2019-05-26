@@ -31,6 +31,7 @@ async function checkConnection() {
 // checkConnection();
 
 /** Clear the index, recreate it, and add mappings */
+// NOTE: IF FAILS - SHOULDN't PASS ANY PARAMETERS
 async function resetIndex() {
   if (await client.indices.exists({index})) {
     await client.indices.delete({index});

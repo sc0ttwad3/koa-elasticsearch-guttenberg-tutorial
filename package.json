@@ -18,12 +18,12 @@
   "license": "MIT",
   "dependencies": {
     "@elastic/elasticsearch": "^6.8.0",
-    "koa": "2.7.0",
     "joi": "^14.3.1",
+    "koa": "2.7.0",
     "koa-joi-validate": "^0.5.1",
     "koa-router": "^7.4.0"
   },
-  "devDependencies": { },
+  "devDependencies": {},
   "directories": {
     "doc": "docs"
   },
