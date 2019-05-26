@@ -23,6 +23,7 @@
     "koa-joi-validate": "^0.5.1",
     "koa-router": "^7.4.0"
   },
+  "devDependencies": { },
   "directories": {
     "doc": "docs"
   },
@@ -33,8 +34,5 @@
   "bugs": {
     "url": "https://github.com/sc0ttwad3/koa-elasticsearch-guttenberg-tutorial/issues"
   },
-  "homepage": "https://github.com/sc0ttwad3/koa-elasticsearch-guttenberg-tutorial#readme",
-  "devDependencies": {
-
-  }
+  "homepage": "https://github.com/sc0ttwad3/koa-elasticsearch-guttenberg-tutorial#readme"
 }
