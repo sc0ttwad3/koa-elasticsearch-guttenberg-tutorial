@@ -121,6 +121,7 @@ Features: AsynchDNS IDN IPv6 Largefile GSS-API Kerberos SPNEGO NTLM NTLM_WB SSL 
 
 
 7.65.x
+(latest source locally compiled)
 ------------------------------
 
 curl 7.65.0 (x86_64-pc-linux-gnu) libcurl/7.65.0 OpenSSL/1.1.1 zlib/1.2.11 libidn2/2.0.5 libpsl/0.20.2 (+libidn2/2.0.4) libssh2/1.8.0 nghttp2/1.32.1 librtmp/2.3
