@@ -1,4 +1,6 @@
-# opendistro-es
+# koa-elasticsearch-guttenberg-tutorial
+
+## opendistro-es
 
 Opendistro-for-Elasticsearch 0.9.0
 
