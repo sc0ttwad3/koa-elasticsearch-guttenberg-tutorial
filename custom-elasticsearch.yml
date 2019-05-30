@@ -5,8 +5,8 @@ http.cors.enabled: true
 http.cors.allow-headers : X-Requested-With,X-Auth-Token,Content-Type,Content-Length,Authorization
 http.cors.allow-credentials: true
 
+# Production tips
 # See:https://logz.io/blog/the-top-5-elasticsearch-mistakes-how-to-avoid-them/
-cluster.name: elasticsearch_spectre360
 
 ######## Start OpenDistro for Elasticsearch Security Demo Configuration ########
 # WARNING: revise all the lines below before you go into production

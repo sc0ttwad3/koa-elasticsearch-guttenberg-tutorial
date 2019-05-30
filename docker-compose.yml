@@ -1,5 +1,19 @@
 version: '3'
 services:
+
+  api: # Node.js App
+    container_name: gs-api
+    build: .
+    ports:
+      - "3000:3000" # Expose API port
+      - "9229:9229" # Expose Node process debug port (disable in production)
+    environment: # Set ENV vars
+     - NODE_ENV=local
+     - ES_HOST=elasticsearch
+     - PORT=3000
+    volumes: # Attach local book data directory
+      - ./books:/usr/src/app/books
+
   odfe-node1:
     image: amazon/opendistro-for-elasticsearch:0.9.0
     container_name: odfe-node1
