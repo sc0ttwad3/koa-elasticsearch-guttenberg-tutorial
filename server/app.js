@@ -1,4 +1,5 @@
 const dotenv = require('dotenv').config();
+const chalk = require('chalk');
 const Koa = require('koa');
 const Router = require('koa-router');
 const joi = require('joi');
@@ -49,6 +50,7 @@ router.get(
   }),
   async (ctx, next) => {
     const {term, offset} = ctx.request.query;
+    console.log(chalk.blue(`Searching for: ${term}...`));
     ctx.body = await search.queryTerm(term, offset);
   }
 );
@@ -60,5 +62,5 @@ app
   .use(router.allowedMethods())
   .listen(port, err => {
     if (err) throw err;
-    console.log(`App Listening on Port ${port}`);
+    console.log(chalk.greenBright(`App Listening on Port ${port}`));
   });

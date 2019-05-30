@@ -1,4 +1,5 @@
 const {Client} = require('@elastic/elasticsearch');
+const chalk = require('chalk');
 
 const index = 'library';
 const type = 'novel';
@@ -20,8 +21,9 @@ async function checkConnection() {
       const health = await client.cluster.health({});
       console.log(health);
       isConnected = true;
+      console.log(chalk.greenBright('[✓] Connected to ES index...'));
     } catch (err) {
-      console.log('Connection failed, retrying...', err);
+      console.log(chalk.red('[ ] Connection failed.'), err);
     } finally {
       console.log('--------------------------------------------');
       break;
