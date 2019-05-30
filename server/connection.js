@@ -14,7 +14,8 @@ const client = new Client({
 async function checkConnection() {
   let isConnected = false;
   while (!isConnected) {
-    console.log('Connecting to ES');
+    console.log('--------------------------------------------');
+    console.log('Connecting to ES...');
     try {
       const health = await client.cluster.health({});
       console.log(health);
@@ -22,13 +23,14 @@ async function checkConnection() {
     } catch (err) {
       console.log('Connection failed, retrying...', err);
     } finally {
+      console.log('--------------------------------------------');
       break;
     }
   }
 }
 
 // DEBUG
-// checkConnection();
+checkConnection();
 
 /** Clear the index, recreate it, and add mappings */
 // NOTE: IF FAILS - SHOULDN't PASS ANY PARAMETERS

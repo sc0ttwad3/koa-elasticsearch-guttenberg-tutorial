@@ -1,3 +1,4 @@
+const dotenv = require('dotenv').config();
 const Koa = require('koa');
 const Router = require('koa-router');
 const joi = require('joi');
@@ -5,7 +6,6 @@ const validate = require('koa-joi-validate');
 const search = require('./search');
 
 const app = new Koa();
-const router = new Router();
 
 // Log each request to the console
 app.use(async (ctx, next) => {
@@ -53,7 +53,7 @@ router.get(
   }
 );
 
-const port = process.env.PORT || 3000;
+const port = process.env.PORT || PORT || 3000;
 
 app
   .use(router.routes())
