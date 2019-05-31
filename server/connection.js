@@ -5,10 +5,11 @@ const index = 'library';
 const type = 'novel';
 
 const client = new Client({
-  node: 'https://admin:admin@localhost:9200',
+  node: 'https://localhost:9200',
   ssl: {
     rejectUnauthorized: false
-  }
+  },
+  auth: {username: 'admin', password: 'admin'}
 });
 
 /** Check the ES connection status */
