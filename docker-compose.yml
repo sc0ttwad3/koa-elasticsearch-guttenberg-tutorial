@@ -7,10 +7,10 @@ services:
     ports:
       - "3000:3000" # Expose API port
       - "9229:9229" # Expose Node process debug port (disable in production)
-    environment: # Set ENV vars
-     - NODE_ENV=local
-     - ES_HOST=elasticsearch
-     - PORT=3000
+  #  environment: # Set ENV vars
+  #   - NODE_ENV=local
+  #    - ES_HOST=elasticsearch
+  #   - PORT=3000
     volumes: # Attach local book data directory
       - ./books:/usr/src/app/books
 
@@ -30,8 +30,6 @@ services:
     ports:
       - 9200:9200
       - 9600:9600 # required for Performance Analyzer
-    networks:
-      - odfe-net
 
   odfe-node2:
     image: amazon/opendistro-for-elasticsearch:0.9.0
@@ -47,8 +45,6 @@ services:
         hard: -1
     volumes:
       - odfe-data2:/usr/share/elasticsearch/data
-    networks:
-      - odfe-net
 
   kibana:
     image: amazon/opendistro-for-elasticsearch-kibana:0.9.0
@@ -60,8 +56,6 @@ services:
     environment:
       ELASTICSEARCH_URL: https://odfe-node1:9200
       ELASTICSEARCH_HOSTS: https://odfe-node1:9200
-    networks:
-      - odfe-net
 
   # elasticsearch web gui
   dejavu:
@@ -71,12 +65,8 @@ services:
     - 1358:1358
     links:
       - odfe-node1
-    networks:
-      - odfe-net
 
 volumes:
   odfe-data1:
   odfe-data2:
 
-networks:
-  odfe-net:

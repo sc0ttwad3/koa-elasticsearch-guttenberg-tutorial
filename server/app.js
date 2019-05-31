@@ -7,6 +7,7 @@ const validate = require('koa-joi-validate');
 const search = require('./search');
 
 const app = new Koa();
+const router = new Router();
 
 // Log each request to the console
 app.use(async (ctx, next) => {

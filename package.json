@@ -4,7 +4,7 @@
   "description": "Tutorial project that will use docker to run elasticsearch against 100 literary texts in a Vue app and Koa server",
   "main": "index.js",
   "scripts": {
-    "start": "node --inspect=localhost:9229 server/app.js",
+    "start": "node server/app.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [
@@ -25,7 +25,7 @@
     "joi": "^14.3.1",
     "koa": "2.7.0",
     "koa-joi-validate": "^0.5.1",
-    "koa-router": "^7.4.0",
+    "koa-router": "^7.4.",
     "path": "^0.12.7"
   },
   "devDependencies": {},
