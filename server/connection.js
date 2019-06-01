@@ -1,3 +1,4 @@
+const dotenv = require('dotenv').config();
 const {Client} = require('@elastic/elasticsearch');
 const chalk = require('chalk');
 
