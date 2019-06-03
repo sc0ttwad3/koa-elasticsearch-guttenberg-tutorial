@@ -7,7 +7,7 @@ services:
       - node.name=es01
       - discovery.seed_hosts=es02
       - cluster.initial_master_nodes=es01,es02
-      - cluster.name=docker-cluster
+      - cluster.name=es-cluster
       - bootstrap.memory_lock=true
       - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
     ulimits:
@@ -27,7 +27,7 @@ services:
       - node.name=es02
       - discovery.seed_hosts=es01
       - cluster.initial_master_nodes=es01,es02
-      - cluster.name=docker-cluster
+      - cluster.name=es-cluster
       - bootstrap.memory_lock=true
       - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
     ulimits:
@@ -39,6 +39,30 @@ services:
     networks:
       - esnet
 
+  kibana:
+    image: docker.elastic.co/kibana/kibana:7.1.1
+    container_name: kibana
+    depends_on:
+    - es01
+    environment:
+      ELASTICSEARCH_URL: http://es01:9200
+      ELASTICSEARCH_HOSTS: http://es01:9200
+    ports:
+      - 5601:5601
+    networks:
+      - esnet
+
+  # elasticsearch web gui
+  dejavu:
+    image: appbaseio/dejavu:3.2.3
+    container_name: dejavu
+    ports:
+    - 1358:1358
+    depends_on:
+      - es01
+    networks:
+      - esnet
+
 volumes:
   esdata01:
     driver: local
@@ -47,3 +71,4 @@ volumes:
 
 networks:
   esnet:
+    name: esnet
