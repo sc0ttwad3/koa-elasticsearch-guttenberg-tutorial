@@ -1,72 +1,49 @@
-version: '3'
+version: '2.2'
 services:
-
-  api: # Node.js App
-    container_name: gs-api
-    build: .
-    ports:
-      - "3000:3000" # Expose API port
-      - "9229:9229" # Expose Node process debug port (disable in production)
-  #  environment: # Set ENV vars
-  #   - NODE_ENV=local
-  #    - ES_HOST=elasticsearch
-  #   - PORT=3000
-    volumes: # Attach local book data directory
-      - ./books:/usr/src/app/books
-
-  odfe-node1:
-    image: amazon/opendistro-for-elasticsearch:0.9.0
-    container_name: odfe-node1
+  es01:
+    image: docker.elastic.co/elasticsearch/elasticsearch:7.1.1
+    container_name: es01
     environment:
-      - cluster.name=odfe-cluster
-      - bootstrap.memory_lock=true # along with the memlock settings below, disables swapping
-      - "ES_JAVA_OPTS=-Xms512m -Xmx512m" # minimum and maximum Java heap size, recommend setting both to 50% of system RAM
-    ulimits:
-      memlock:
-        soft: -1
-        hard: -1
-    volumes:
-      - odfe-data1:/usr/share/elasticsearch/data
-    ports:
-      - 9200:9200
-      - 9600:9600 # required for Performance Analyzer
-
-  odfe-node2:
-    image: amazon/opendistro-for-elasticsearch:0.9.0
-    container_name: odfe-node2
-    environment:
-      - cluster.name=odfe-cluster
+      - node.name=es01
+      - discovery.seed_hosts=es02
+      - cluster.initial_master_nodes=es01,es02
+      - cluster.name=docker-cluster
       - bootstrap.memory_lock=true
       - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
-      - discovery.zen.ping.unicast.hosts=odfe-node1
     ulimits:
       memlock:
         soft: -1
         hard: -1
     volumes:
-      - odfe-data2:/usr/share/elasticsearch/data
-
-  kibana:
-    image: amazon/opendistro-for-elasticsearch-kibana:0.9.0
-    container_name: odfe-kibana
+      - esdata01:/usr/share/elasticsearch/data
     ports:
-      - 5601:5601
-    expose:
-      - "5601"
+      - 9200:9200
+    networks:
+      - esnet
+  es02:
+    image: docker.elastic.co/elasticsearch/elasticsearch:7.1.1
+    container_name: es02
     environment:
-      ELASTICSEARCH_URL: https://odfe-node1:9200
-      ELASTICSEARCH_HOSTS: https://odfe-node1:9200
-
-  # elasticsearch web gui
-  dejavu:
-    image: appbaseio/dejavu:3.2.3
-    container_name: dejavu
-    ports:
-    - 1358:1358
-    links:
-      - odfe-node1
+      - node.name=es02
+      - discovery.seed_hosts=es01
+      - cluster.initial_master_nodes=es01,es02
+      - cluster.name=docker-cluster
+      - bootstrap.memory_lock=true
+      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+    volumes:
+      - esdata02:/usr/share/elasticsearch/data
+    networks:
+      - esnet
 
 volumes:
-  odfe-data1:
-  odfe-data2:
+  esdata01:
+    driver: local
+  esdata02:
+    driver: local
 
+networks:
+  esnet:
