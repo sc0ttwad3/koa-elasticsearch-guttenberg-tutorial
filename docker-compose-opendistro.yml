@@ -5,7 +5,7 @@ services:
     container_name: gs-api
     build: .
     depends_on:
-      - odfe-node1
+    - odfe-node1
     ports:
       - "3000:3000" # Expose API port
       - "9229:9229" # Expose Node process debug port (disable in production)
@@ -52,7 +52,7 @@ services:
     image: amazon/opendistro-for-elasticsearch-kibana:0.9.0
     container_name: odfe-kibana
     depends_on:
-      - odfe-node1
+    - odfe-node1
     ports:
       - 5601:5601
     expose:
