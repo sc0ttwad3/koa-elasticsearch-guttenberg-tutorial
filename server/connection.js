@@ -1,7 +1,6 @@
 const chalk = require('chalk');
 const dotenv = require('dotenv').config();
 const {Client} = require('@elastic/elasticsearch');
-
 // Alternate communication method with es
 const { Curl } = require('node-libcurl');
 
@@ -70,7 +69,7 @@ async function putBookMapping() {
 /****
 elasticsearch-js
 
-https://github.com/elastic/elasticsearch-js
+http://github.com/elastic/elasticsearch-js
 
 
   Request specific options

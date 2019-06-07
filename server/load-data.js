@@ -17,7 +17,7 @@ async function readAndInsertBooks() {
       console.log(`Reading File - ${file}`);
       const filePath = path.join('./books', file);
       const {title, author, paragraphs} = parseBookFile(filePath);
-      await insertBookData(title, author, paragraphs);
+      // await insertBookData(title, author, paragraphs);
     }
   } catch (err) {
     console.error(err);

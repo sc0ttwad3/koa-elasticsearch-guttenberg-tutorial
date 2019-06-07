@@ -2,7 +2,7 @@ const vm = new Vue({
   el: '#vue-instance',
   data() {
     return {
-      baseUrl: 'https://localhost:3000', // API url
+      baseUrl: 'http://localhost:3000', // API url
       searchTerm: 'Communist', // Default search term
       searchDebounce: null, // Timeout for search bar debounce
       searchResults: [], // Displayed search results
