@@ -1,16 +1,24 @@
+const chalk = require('chalk');
 const dotenv = require('dotenv').config();
 const {Client} = require('@elastic/elasticsearch');
-const chalk = require('chalk');
 
+// Alternate communication method with es
+const { Curl } = require('node-libcurl');
+
+const curl = new Curl();
 const index = 'library';
 const type = 'novel';
 
 const client = new Client({
-  node: 'https://localhost:9200',
+  node: 'http://localhost:9200',
+  /* Necessary if authentication enabled
+   * in conjuction with using the OpenDistro
+   * version of ES
   ssl: {
     rejectUnauthorized: false
   },
   auth: {username: 'admin', password: 'admin'}
+  */
 });
 
 /** Check the ES connection status */
@@ -23,9 +31,9 @@ async function checkConnection() {
       const health = await client.cluster.health({});
       console.log(health);
       isConnected = true;
-      console.log(chalk.greenBright('[✓] Connected to ES index...'));
+      console.log(chalk.greenBright('\n[✓] Connected to ES index...'));
     } catch (err) {
-      console.log(chalk.red('[ ] Connection failed.'), err);
+      console.log(chalk.red('\n[ ] Connection failed.'), err);
     } finally {
       console.log('--------------------------------------------');
       break;
