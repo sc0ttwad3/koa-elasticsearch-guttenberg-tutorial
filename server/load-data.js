@@ -6,7 +6,7 @@ const esConnection = require('./connection');
 async function readAndInsertBooks() {
   try {
     // Clear previous ES index
-    await esConnection.resetIndex();
+    // await esConnection.resetIndex();
 
     // Read books directory
     let files = fs.readdirSync('./books').filter(file => file.slice(-4) === '.txt');
@@ -17,7 +17,7 @@ async function readAndInsertBooks() {
       console.log(`Reading File - ${file}`);
       const filePath = path.join('./books', file);
       const {title, author, paragraphs} = parseBookFile(filePath);
-      // await insertBookData(title, author, paragraphs);
+      await insertBookData(title, author, paragraphs);
     }
   } catch (err) {
     console.error(err);

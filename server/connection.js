@@ -43,7 +43,9 @@ async function checkConnection() {
 // DEBUG
 checkConnection();
 
-/** Clear the index, recreate it, and add mappings */
+/* Handled this manually for now
+
+// Clear the index, recreate it, and add mappings
 // NOTE: IF FAILS - SHOULDN't PASS ANY PARAMETERS
 async function resetIndex() {
   if (await client.indices.exists({index})) {
@@ -54,7 +56,7 @@ async function resetIndex() {
   await putBookMapping();
 }
 
-/** Add book section schema mapping to ES */
+// Add book section schema mapping to ES
 async function putBookMapping() {
   const schema = {
     title: {type: 'keyword'},
@@ -65,6 +67,9 @@ async function putBookMapping() {
 
   return client.indices.putMapping({index, type, body: {properties: schema}});
 }
+*/
+
+
 
 /****
 elasticsearch-js
