@@ -1,9 +1,10 @@
 const chalk = require('chalk');
 const dotenv = require('dotenv').config();
-const {Client} = require('@elastic/elasticsearch');
+const { Client } = require('@elastic/elasticsearch');
 // Alternate communication method with es
 const { Curl } = require('node-libcurl');
 
+let DEBUG = true;
 const curl = new Curl();
 const index = 'library';
 const type = 'novel';
@@ -40,16 +41,19 @@ async function checkConnection() {
   }
 }
 
-// DEBUG
-checkConnection();
+if (DEBUG) {
+  checkConnection();
+  DEBUG = false;
+}
 
-/* Handled this manually for now
-
+/*
 // Clear the index, recreate it, and add mappings
 // NOTE: IF FAILS - SHOULDN't PASS ANY PARAMETERS
 async function resetIndex() {
   if (await client.indices.exists({index})) {
+    console.log(`Index: ${index} already exists`);
     await client.indices.delete({index});
+    console.log(`Index: ${index} deleted`);
   }
 
   await client.indices.create({index});
@@ -68,7 +72,6 @@ async function putBookMapping() {
   return client.indices.putMapping({index, type, body: {properties: schema}});
 }
 */
-
 
 
 /****
