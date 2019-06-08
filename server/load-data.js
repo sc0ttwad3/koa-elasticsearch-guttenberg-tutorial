@@ -24,7 +24,14 @@ async function readAndInsertBooks() {
     console.error(err);
   }
 }
-
+/**
+ *
+ *
+ *
+ *    ONE TIME Only!
+ *
+ *
+ */
 readAndInsertBooks();
 
 /** Read an individual book text file, and extract the title, author, and paragraphs */
