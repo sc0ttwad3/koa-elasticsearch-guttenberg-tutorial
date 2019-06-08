@@ -1,13 +1,9 @@
 const chalk = require('chalk');
 const dotenv = require('dotenv').config();
 const { Client } = require('@elastic/elasticsearch');
-// Alternate communication method with es
-const { Curl } = require('node-libcurl');
 
-let DEBUG = true;
-const curl = new Curl();
-const index = 'library';
-const type = 'novel';
+// const index = 'library';
+// const type = 'novel';
 
 const client = new Client({
   node: 'http://localhost:9200',
@@ -41,10 +37,7 @@ async function checkConnection() {
   }
 }
 
-if (DEBUG) {
-  checkConnection();
-  DEBUG = false;
-}
+checkConnection();
 
 /*
 // Clear the index, recreate it, and add mappings
@@ -111,8 +104,8 @@ The supported request specific options are:
 
 module.exports = {
   client,
-  index,
-  type,
+  // index,
+  // type,
   checkConnection,
-  resetIndex
+  // resetIndex
 };
