@@ -106,6 +106,6 @@ module.exports = {
   client,
   // index,
   // type,
-  checkConnection,
+  // checkConnection,
   // resetIndex
 };

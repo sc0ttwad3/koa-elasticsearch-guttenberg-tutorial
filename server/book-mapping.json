@@ -1,8 +1,18 @@
 {
-  "properties": {
-    "title": {"type": "keyword"},
-    "author": {"type": "keyword"},
-    "location": {"type": "integer"},
-    "text": {"type": "text"}
+  "mapping": {
+    "properties": {
+      "author": {
+        "type": "keyword"
+      },
+      "location": {
+        "type": "integer"
+      },
+      "text": {
+        "type": "text"
+      },
+      "title": {
+        "type": "keyword"
+      }
+    }
   }
 }

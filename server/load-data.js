@@ -1,4 +1,5 @@
 const fs = require('fs');
+const chalk = require('chalk');
 const path = require('path');
 const esConnection = require('./connection');
 
@@ -58,22 +59,23 @@ function parseBookFile(filePath) {
 /** Bulk index the book data in Elasticsearch */
 async function insertBookData(title, author, paragraphs) {
   let bulkOps = []; // Array to store bulk operations
-
+//  console.log(chalk.blue("Running in debug mode. No actual data inserted"))
   // Add an index operation for each section in the book
   for (let i = 0; i < paragraphs.length; i++) {
     // Describe action
-    bulkOps.push({index: {_index: esConnection.index, _type: esConnection.type}});
+    bulkOps.push({index: {_index: "library"}});
 
     // Add document
     bulkOps.push({
-      author,
       title,
+      author,
       location: i,
       text: paragraphs[i]
     });
 
     if (i > 0 && i % 500 === 0) {
       // Do bulk insert in 500 paragraph batches
+    //  console.log(chalk.blue("DEBUG: inserting 500 paragraphs..."))
       await esConnection.client.bulk({body: bulkOps});
       bulkOps = [];
       console.log(`Indexed Paragraphs ${i - 499} - ${i}`);
@@ -81,6 +83,7 @@ async function insertBookData(title, author, paragraphs) {
   }
 
   // Insert remainder of bulk ops array
+//   console.log(chalk.blue("DEBUG: Inserting remainder of bulk operations array..."))
   await esConnection.client.bulk({body: bulkOps});
   console.log(`Indexed Paragraphs ${paragraphs.length - bulkOps.length / 2} - ${paragraphs.length}\n\n\n`);
 }
