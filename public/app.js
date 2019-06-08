@@ -31,8 +31,8 @@ const vm = new Vue({
       const response = await axios.get(`${this.baseUrl}/search`, {
         params: {term: this.searchTerm, offset: this.searchOffset}
       });
-      this.numHits = response.data.body.hits.total;
-      return response.data.body.hits;
+      this.numHits = response.data.body.hits.total.value;
+      return response.data.body.hits.hits;
     },
     /** Get next page of search results */
     async nextResultsPage() {
