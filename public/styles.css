@@ -1,4 +1,7 @@
-body { font-family: 'EB Garamond', serif; }
+body {
+  background-color: #eeeeee;
+  font-family: 'EB Garamond', serif;
+}
 
 .mui-textfield > input, .mui-btn, .mui--text-subhead, .mui-panel > .mui--text-headline {
   font-family: 'Open Sans', sans-serif;
