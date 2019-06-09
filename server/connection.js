@@ -1,12 +1,12 @@
 const chalk = require('chalk');
-const dotenv = require('dotenv').config();
 const { Client } = require('@elastic/elasticsearch');
 
 // const index = 'library';
 // const type = 'novel';
 
 const client = new Client({
-  node: 'http://localhost:9200',
+  // node: 'http://localhost:9200',
+  node: process.env.ES_HOST,
   /* Necessary if authentication enabled
    * in conjuction with using the OpenDistro
    * version of ES
