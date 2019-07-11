@@ -7,7 +7,7 @@ const esConnection = require('./connection');
 async function readAndInsertBooks() {
   try {
     // Clear previous ES index
-    // await esConnection.resetIndex();
+    //await esConnection.resetIndex();
 
     // Read books directory
     let files = fs.readdirSync('./books').filter(file => file.slice(-4) === '.txt');

@@ -37,7 +37,8 @@ async function checkConnection() {
   }
 }
 
-checkConnection();
+// Debugging/Running this file directly
+// checkConnection();
 
 /*
 // Clear the index, recreate it, and add mappings
@@ -103,9 +104,9 @@ The supported request specific options are:
 */
 
 module.exports = {
+  checkConnection,
   client,
   // index,
   // type,
-  // checkConnection,
   // resetIndex
 };
