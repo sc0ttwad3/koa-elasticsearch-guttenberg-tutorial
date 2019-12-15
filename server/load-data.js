@@ -1,7 +1,7 @@
-const fs = require('fs');
-const chalk = require('chalk');
-const path = require('path');
-const esConnection = require('./connection');
+const fs = require("fs");
+const chalk = require("chalk");
+const path = require("path");
+const esConnection = require("./connection");
 
 /** Clear ES index, parse and index all files from the books directory */
 async function readAndInsertBooks() {
@@ -10,14 +10,15 @@ async function readAndInsertBooks() {
     //await esConnection.resetIndex();
 
     // Read books directory
-    let files = fs.readdirSync('./books').filter(file => file.slice(-4) === '.txt');
+    let files = fs.readdirSync("./books").filter(file => file.slice(-4) === ".txt");
     console.log(`Found ${files.length} Files`);
 
     // Read each book file, and index each paragraph in elasticsearch
     for (let file of files) {
       console.log(`Reading File - ${file}`);
-      const filePath = path.join('./books', file);
+      const filePath = path.join("./books", file);
       const {title, author, paragraphs} = parseBookFile(filePath);
+
       await insertBookData(title, author, paragraphs);
     }
   } catch (err) {
@@ -37,12 +38,12 @@ readAndInsertBooks();
 /** Read an individual book text file, and extract the title, author, and paragraphs */
 function parseBookFile(filePath) {
   // Read text file
-  const book = fs.readFileSync(filePath, 'utf8');
+  const book = fs.readFileSync(filePath, "utf8");
 
   // Find book title and author
   const title = book.match(/^Title:\s(.+)$/m)[1];
   const authorMatch = book.match(/^Author:\s(.+)$/m);
-  const author = !authorMatch || authorMatch[1].trim() === '' ? 'Unknown Author' : authorMatch[1];
+  const author = !authorMatch || authorMatch[1].trim() === "" ? "Unknown Author" : authorMatch[1];
 
   console.log(`Reading Book - ${title} By ${author}`);
 
@@ -55,9 +56,9 @@ function parseBookFile(filePath) {
   const paragraphs = book
     .slice(startOfBookIndex, endOfBookIndex) // Remove Guttenberg header and footer
     .split(/\n\s+\n/g) // Split each paragraph into it's own array entry
-    .map(line => line.replace(/\r\n/g, ' ').trim()) // Remove paragraph line breaks and whitespace
-    .map(line => line.replace(/_/g, '')) // Guttenberg uses "_" to signify italics.  We'll remove it, since it makes the raw text look messy.
-    .filter(line => line && line !== ''); // Remove empty lines
+    .map(line => line.replace(/\r\n/g, " ").trim()) // Remove paragraph line breaks and whitespace
+    .map(line => line.replace(/_/g, "")) // Guttenberg uses "_" to signify italics.  We'll remove it, since it makes the raw text look messy.
+    .filter(line => line && line !== ""); // Remove empty lines
 
   console.log(`Parsed ${paragraphs.length} Paragraphs\n`);
   return {title, author, paragraphs};
@@ -66,7 +67,7 @@ function parseBookFile(filePath) {
 /** Bulk index the book data in Elasticsearch */
 async function insertBookData(title, author, paragraphs) {
   let bulkOps = []; // Array to store bulk operations
-//  console.log(chalk.blue("Running in debug mode. No actual data inserted"))
+  //  console.log(chalk.blue("Running in debug mode. No actual data inserted"))
   // Add an index operation for each section in the book
   for (let i = 0; i < paragraphs.length; i++) {
     // Describe action
@@ -82,7 +83,7 @@ async function insertBookData(title, author, paragraphs) {
 
     if (i > 0 && i % 500 === 0) {
       // Do bulk insert in 500 paragraph batches
-    //  console.log(chalk.blue("DEBUG: inserting 500 paragraphs..."))
+      //  console.log(chalk.blue("DEBUG: inserting 500 paragraphs..."))
       await esConnection.client.bulk({body: bulkOps});
       bulkOps = [];
       console.log(`Indexed Paragraphs ${i - 499} - ${i}`);
@@ -90,7 +91,7 @@ async function insertBookData(title, author, paragraphs) {
   }
 
   // Insert remainder of bulk ops array
-//   console.log(chalk.blue("DEBUG: Inserting remainder of bulk operations array..."))
+  //   console.log(chalk.blue("DEBUG: Inserting remainder of bulk operations array..."))
   await esConnection.client.bulk({body: bulkOps});
   console.log(`Indexed Paragraphs ${paragraphs.length - bulkOps.length / 2} - ${paragraphs.length}\n\n\n`);
 }

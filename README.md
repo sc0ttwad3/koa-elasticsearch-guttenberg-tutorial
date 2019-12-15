@@ -13,14 +13,14 @@ Docker-Compose setup for running elasticsearch, kibana, dejavu with persistent s
 First create an index for the books and verify it is listed as one of the indices:
 
 ```
-λ curl -XPUT http://localhost:9200/library                             
-{"acknowledged":true,"shards_acknowledged":true,"index":"library"}     
+λ curl -XPUT http://localhost:9200/books
+{"acknowledged":true,"shards_acknowledged":true,"index":"books"}
 
-λ curl -XGET http://localhost:9200/_cat/indices?                     
-green open library  plTl1SD0QUCRTvWOFLOLsw 1 1 0 0   460b   230b
+λ curl -XGET http://localhost:9200/_cat/indices?
+green open books  plTl1SD0QUCRTvWOFLOLsw 1 1 0 0   460b   230b
 ```
 
-Then create field properties/mappings for each book entry and save the file as *book-mapping.json*:
+Then create field properties/mappings for each book entry and save the file as _book-mapping.json_:
 
 ```
 {
@@ -33,15 +33,11 @@ Then create field properties/mappings for each book entry and save the file as *
 }
 ```
 
-
-Then apply the mapping to the library index:
+DEPRECATED in 7.x -- Then apply the mapping to the books index:
 
 ```
-$ curl -d "@book-mapping.json" -H 'Content-Type: application/json' -X PUT "localhost:9200/library/_mapping"
+$ curl -d "@book-mapping.json" -H 'Content-Type: application/json' -X PUT "localhost:9200/books/_mapping"
 ```
-
-
-
 
 ## Running
 

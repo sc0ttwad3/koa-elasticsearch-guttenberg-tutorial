@@ -1,12 +1,12 @@
-const chalk = require('chalk');
-const { Client } = require('@elastic/elasticsearch');
-
+const chalk = require("chalk");
+const {Client} = require("@elastic/elasticsearch");
+const dotenv = require("dotenv").config();
 // const index = 'library';
 // const type = 'novel';
 
 const client = new Client({
   // node: 'http://localhost:9200',
-  node: process.env.ES_HOST,
+  node: process.env.ES_HOST
   /* Necessary if authentication enabled
    * in conjuction with using the OpenDistro
    * version of ES
@@ -21,17 +21,17 @@ const client = new Client({
 async function checkConnection() {
   let isConnected = false;
   while (!isConnected) {
-    console.log('--------------------------------------------');
-    console.log('Connecting to ES...');
+    console.log("--------------------------------------------");
+    console.log("Connecting to ES...");
     try {
       const health = await client.cluster.health({});
       console.log(health);
       isConnected = true;
-      console.log(chalk.greenBright('\n[✓] Connected to ES index...'));
+      console.log(chalk.greenBright("\n[✓] Connected to ES index..."));
     } catch (err) {
-      console.log(chalk.red('\n[ ] Connection failed.'), err);
+      console.log(chalk.red("\n[ ] Connection failed."), err);
     } finally {
-      console.log('--------------------------------------------');
+      console.log("--------------------------------------------");
       break;
     }
   }
@@ -66,7 +66,6 @@ async function putBookMapping() {
   return client.indices.putMapping({index, type, body: {properties: schema}});
 }
 */
-
 
 /****
 elasticsearch-js
@@ -105,7 +104,7 @@ The supported request specific options are:
 
 module.exports = {
   checkConnection,
-  client,
+  client
   // index,
   // type,
   // resetIndex
