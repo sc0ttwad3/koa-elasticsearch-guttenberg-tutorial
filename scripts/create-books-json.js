@@ -1,32 +1,48 @@
 const fs = require("fs");
+const jsonfile = require("jsonfile");
 const chalk = require("chalk");
+const {dump} = require("dumper.js");
 const path = require("path");
 const R = require("rambda");
+require("dotenv").config();
 
-/* ToDo: change this hard-coded file path */
-const getBookFiles = async () => {
+const dataDir = process.env.BOOK_DATA_DIR;
+const filename = process.env.BOOK_JSON_FILE;
+
+// Delete existing json file
+if (fs.existsSync(`${dataDir}/${filename}.json`)) {
+  fs.unlinkSync(`${dataDir}/${filename}.json`);
+}
+
+const getBookTextFilePath = file => {
+  return path.join(dataDir, file);
+};
+
+/**
+ *
+ *  returns [] of bookFileNames
+ */
+const getBookFileFullPathNames = () => {
   try {
     // Read books directory
-    let files = fs.readdirSync("./books").filter(file => file.slice(-4) === ".txt");
+    let files = fs.readdirSync(dataDir).filter(file => file.slice(-4) === ".txt");
     console.log(`Found ${files.length} Files`);
-    return files;
+    return R.map(x => getBookTextFilePath(x), files);
   } catch (err) {
     console.error(err);
   }
 };
 
-const parseBook = file => {};
-
 const readBooks = () => {
   try {
     // Read books directory
-    let files = fs.readdirSync("./books").filter(file => file.slice(-4) === ".txt");
-    console.log(`Found ${files.length} Files`);
+    let files = fs.readdirSync(dataDir).filter(file => file.slice(-4) === ".txt");
+    console.log(chalk.blue(`Found ${files.length} Files`));
 
     // Read each book file
     for (let file of files) {
       console.log(`Reading File - ${file}`);
-      const filePath = path.join("./books", file);
+      const filePath = path.join(dataDir, file);
       const {title, author, text} = parseBookFile(filePath);
 
       //await insertBookData(title, author, text);
@@ -36,10 +52,13 @@ const readBooks = () => {
   }
 };
 
-/** Parse book object and extracttitle, author, text */
-const parseBookFile = filePath => {
+/** Parse book object and extracttitle, author, text
+ *
+ *  Returns {title, author, paragraphs}
+ */
+const parseBookFile = bookFile => {
   // Read text file
-  const book = fs.readFileSync(filePath, "utf8");
+  const book = fs.readFileSync(bookFile, "utf8");
 
   // Find book title and author
   const title = book.match(/^Title:\s(.+)$/m)[1];
@@ -61,12 +80,27 @@ const parseBookFile = filePath => {
     .map(line => line.replace(/_/g, "")) // Guttenberg uses "_" to signify italics.  We'll remove it, since it makes the raw text look messy.
     .filter(line => line && line !== ""); // Remove empty lines
 
-  console.log(`Parsed ${text.length} Paragraphs\n`);
-  return {title, author, paragraphs};
+  console.log(chalk.green(`Parsed ${text.length} paragraphs\n`));
+  return {title, author, text};
+};
+
+const writeBookJsonToFile = obj => {
+  jsonfile
+    .writeFile(`${dataDir}/${filename}.json`, obj, {flag: "a", spaces: 2})
+    .then(() => {
+      console.log("appending book json to file.");
+    })
+    .catch(err => {
+      console.error(err);
+    });
 };
 
 /**
  * Main Sript
  */
 
-getBookFiles();
+// const books = R.map(file => parseBookFile(file), R.identity(getBookFileFullPathNames()));
+R.map(
+  x => writeBookJsonToFile(x),
+  R.map(file => parseBookFile(file), R.identity(getBookFileFullPathNames()))
+);
