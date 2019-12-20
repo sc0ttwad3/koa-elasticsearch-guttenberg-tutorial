@@ -14,5 +14,5 @@ docs/
 
 yarn.lock
 
-.txt.json
+*.txt.json
 

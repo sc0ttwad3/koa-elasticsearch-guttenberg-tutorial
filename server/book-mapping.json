@@ -4,9 +4,6 @@
       "author": {
         "type": "keyword"
       },
-      "location": {
-        "type": "integer"
-      },
       "text": {
         "type": "text"
       },

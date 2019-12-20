@@ -43,7 +43,7 @@ const readBooks = () => {
     for (let file of files) {
       console.log(`Reading File - ${file}`);
       const filePath = path.join(dataDir, file);
-      const {title, author, text} = parseBookFile(filePath);
+      const {title, author, text} = getProcessedBook(filePath);
 
       //await insertBookData(title, author, text);
     }
@@ -56,7 +56,7 @@ const readBooks = () => {
  *
  *  Returns {title, author, paragraphs}
  */
-const parseBookFile = bookFile => {
+const getProcessedBook = bookFile => {
   // Read text file
   const book = fs.readFileSync(bookFile, "utf8");
 
@@ -81,26 +81,38 @@ const parseBookFile = bookFile => {
     .filter(line => line && line !== ""); // Remove empty lines
 
   console.log(chalk.green(`Parsed ${text.length} paragraphs\n`));
-  return {title, author, text};
+  // trim dir --- TODO remove hardcoded to remove 'books\'
+  return {bookFile: bookFile.slice(6), bookObj: {title, author, text}};
 };
 
-const writeBookJsonToFile = obj => {
+const writeBookJsonToFile = ({bookFile, bookObj}) => {
+  const jsonContent = JSON.stringify(bookObj);
+  // console.log(`${JSON.stringify(jsonContent)}`);
+
+  fs.writeFile(`${dataDir}/${bookFile}.json`, jsonContent, 'utf8', function (err) {
+    if (err) {
+        console.log("An error occured while writing JSON Object to File.");
+        return console.log(err);
+    }
+
+    console.log("JSON file has been saved.");
+});
+  /*
   jsonfile
-    .writeFile(`${dataDir}/${filename}.json`, obj, {flag: "a", spaces: 2})
+    .writeFile(`${dataDir}/${bookFile}.json`, bookObj)
     .then(() => {
-      console.log("appending book json to file.");
+      console.log(`creating book ${bookFile} json.`);
     })
     .catch(err => {
       console.error(err);
     });
+  */
 };
 
 /**
  * Main Sript
  */
-
-// const books = R.map(file => parseBookFile(file), R.identity(getBookFileFullPathNames()));
 R.map(
-  x => writeBookJsonToFile(x),
-  R.map(file => parseBookFile(file), R.identity(getBookFileFullPathNames()))
+  ({bookFile, bookObj}) => writeBookJsonToFile({bookFile, bookObj}),
+  R.map(file => getProcessedBook(file), R.identity(getBookFileFullPathNames()))
 );
