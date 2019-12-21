@@ -17,5 +17,6 @@ yarn.lock
 *.txt.json
 indexed
 modified-and-indexed
+books
 
 
