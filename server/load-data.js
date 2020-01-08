@@ -33,7 +33,7 @@ async function readAndInsertBooks() {
  *
  *
  */
-readAndInsertBooks();
+// readAndInsertBooks();
 
 /** Read an individual book text file, and extract the title, author, and paragraphs */
 function parseBookFile(filePath) {
@@ -71,7 +71,7 @@ async function insertBookData(title, author, paragraphs) {
   // Add an index operation for each section in the book
   for (let i = 0; i < paragraphs.length; i++) {
     // Describe action
-    bulkOps.push({index: {_index: "library"}});
+    bulkOps.push({index: {_index: "books"}});
 
     // Add document
     bulkOps.push({

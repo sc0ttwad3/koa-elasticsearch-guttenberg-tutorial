@@ -38,7 +38,7 @@ async function checkConnection() {
 }
 
 // Debugging/Running this file directly
-// checkConnection();
+checkConnection();
 
 /*
 // Clear the index, recreate it, and add mappings

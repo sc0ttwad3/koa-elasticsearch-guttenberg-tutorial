@@ -1,0 +1,17 @@
+{
+  "properties": {
+    "author": {
+      "type": "text",
+      "analyzer": "standard"
+    },
+    "text": {
+      "type": "text",
+      "analyzer": "english"
+    },
+    "title": {
+      "type": "text",
+      "analyzer": "standard",
+      "boost": 2
+    }
+  }
+}
