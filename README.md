@@ -12,13 +12,13 @@
   </a>
 </p>
 
-# 🏠 [Homepage](https://github.com/sc0ttwad3/koa-elasticsearch-guttenberg-tutorial#readme)
+### 🏠 [Homepage](https://github.com/sc0ttwad3/koa-elasticsearch-guttenberg-tutorial#readme)
 
 > Vue-based front-end and node/koa service for full-text searching elasticsearch/kibana indexed Gutenberg Project literary works.
 
 > Made with lots of ☕️ by sc0ttwad3
 
-## Install
+### Install
 
 ```sh
 npm install
@@ -72,34 +72,34 @@ $ curl -d "@book-mappings.json" -H 'Content-Type: application/json' -X PUT "loca
 
 Or in Kibana DevTools use `PUT /books/_mappings` and then the contents of the book-mappings.json
 
-## Usage
+### Usage
 
 ```sh
 npm run start
 ```
 
-## Run tests
+### Run tests
 
 ```sh
 npm run test
 ```
 
-## Author
+### Author
 
 👤 **Scott Wade <sc0ttwad3@gmail.com> (http://sc0ttwad3.com)**
 
 - Website: sc0ttwad3.com
 - Github: [@sc0ttwad3](https://github.com/sc0ttwad3)
 
-## 🤝 Contributing
+### 🤝 Contributing
 
 Contributions, issues and feature requests are welcome!<br />Feel free to check [issues page](https://github.com/sc0ttwad3/koa-elasticsearch-guttenberg-tutorial/issues). You can also take a look at the [contributing guide](https://github.com/sc0ttwad3/koa-elasticsearch-guttenberg-tutorial/blob/master/CONTRIBUTING.md).
 
-## Show your support
+### Show your support
 
 Give a ⭐️ if this project helped you!
 
-## 📝 License
+### 📝 License
 
 Copyright © 2020 [Scott Wade <sc0ttwad3@gmail.com> (http://sc0ttwad3.com)](https://github.com/sc0ttwad3).<br />
 This project is [MIT](https://github.com/sc0ttwad3/koa-elasticsearch-guttenberg-tutorial/blob/master/LICENSE) licensed.
