@@ -12,15 +12,13 @@
   </a>
 </p>
 
-> Tutorial project that will use docker to run elasticsearch against 100 literary texts in a Vue app and Koa server.
+# 🏠 [Homepage](https://github.com/sc0ttwad3/koa-elasticsearch-guttenberg-tutorial#readme)
 
-Made with lots of ☕️ by sc0ttwad3
+> Vue-based front-end and node/koa service for full-text searching elasticsearch/kibana indexed Gutenberg Project literary works.
 
-### 🏠 [Homepage](https://github.com/sc0ttwad3/koa-elasticsearch-guttenberg-tutorial#readme)
+> Made with lots of ☕️ by sc0ttwad3
 
 ## Install
-
-Initial local node module dependencies
 
 ```sh
 npm install
@@ -28,11 +26,15 @@ npm install
 
 ### Elasticsearch
 
-Docker-Compose setup for running elasticsearch, kibana, dejavu with persistent storage.
+Use docker-compose to spin up elasticsearch/kibana/node app with persistent storage.
+
+```sh
+docker-compose up # down to tear down
+```
 
 First create an index for the books and verify it is listed as one of the indices:
 
-```
+```sh
 λ curl -XPUT http://localhost:9200/books
 {"acknowledged":true,"shards_acknowledged":true,"index":"books"}
 
@@ -40,9 +42,9 @@ First create an index for the books and verify it is listed as one of the indice
 green open books  plTl1SD0QUCRTvWOFLOLsw 1 1 0 0   460b   230b
 ```
 
-Then create field properties/mappings for each book entry and save the file as book-mappings.json\_:
+The field properties/mappings for a book entry:
 
-```
+```json
 {
   "properties": {
     "author": {
