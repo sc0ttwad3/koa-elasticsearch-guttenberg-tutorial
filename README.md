@@ -20,24 +20,35 @@ First create an index for the books and verify it is listed as one of the indice
 green open books  plTl1SD0QUCRTvWOFLOLsw 1 1 0 0   460b   230b
 ```
 
-Then create field properties/mappings for each book entry and save the file as _book-mapping.json_:
+Then create field properties/mappings for each book entry and save the file as book-mappings.json\_:
 
 ```
 {
   "properties": {
-    "title": {"type": "keyword"},
-    "author": {"type": "keyword"},
-    "location": {"type": "integer"},
-    "text": {"type": "text"}
+    "author": {
+      "type": "text",
+      "analyzer": "standard"
+    },
+    "text": {
+      "type": "text",
+      "analyzer": "english"
+    },
+    "title": {
+      "type": "text",
+      "analyzer": "standard",
+      "boost": 2
+    }
   }
 }
 ```
 
-DEPRECATED in 7.x -- Then apply the mapping to the books index:
+And use...
 
 ```
-$ curl -d "@book-mapping.json" -H 'Content-Type: application/json' -X PUT "localhost:9200/books/_mapping"
+$ curl -d "@book-mappings.json" -H 'Content-Type: application/json' -X PUT "localhost:9200/books/_mappings"
 ```
+
+Or in Kibana DevTools use `PUT /books/_mappings` and then the contents of the book-mapping.json
 
 ## Running
 
@@ -48,8 +59,6 @@ $ curl -d "@book-mapping.json" -H 'Content-Type: application/json' -X PUT "local
 Anything I want to specifically note.
 
 ### Links
-
-[Open Distro for Elasticsearch](http://opendistro.github.io/for-elasticsearch-docs/)
 
 ## Debug
 

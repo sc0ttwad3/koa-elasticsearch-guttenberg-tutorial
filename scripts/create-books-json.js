@@ -9,11 +9,6 @@ require("dotenv").config();
 const dataDir = process.env.BOOK_DATA_DIR;
 const filename = process.env.BOOK_JSON_FILE;
 
-// Delete existing json file
-if (fs.existsSync(`${dataDir}/${filename}.json`)) {
-  fs.unlinkSync(`${dataDir}/${filename}.json`);
-}
-
 const getBookTextFilePath = file => {
   return path.join(dataDir, file);
 };
@@ -33,6 +28,7 @@ const getBookFileFullPathNames = () => {
   }
 };
 
+/*
 const readBooks = () => {
   try {
     // Read books directory
@@ -51,10 +47,12 @@ const readBooks = () => {
     console.error(err);
   }
 };
+*/
 
-/** Parse book object and extracttitle, author, text
+/** Read file by name give,
+ *  Parse book object and extract title, author, text
  *
- *  Returns {title, author, paragraphs}
+ *  Return {title, author, paragraphs}
  */
 const getProcessedBook = bookFile => {
   // Read text file
@@ -89,24 +87,14 @@ const writeBookJsonToFile = ({bookFile, bookObj}) => {
   const jsonContent = JSON.stringify(bookObj);
   // console.log(`${JSON.stringify(jsonContent)}`);
 
-  fs.writeFile(`${dataDir}/${bookFile}.json`, jsonContent, 'utf8', function (err) {
+  fs.writeFile(`${dataDir}/${bookFile}.json`, jsonContent, "utf8", function(err) {
     if (err) {
-        console.log("An error occured while writing JSON Object to File.");
-        return console.log(err);
+      console.log("An error occured while writing JSON Object to File.");
+      return console.log(err);
     }
 
     console.log("JSON file has been saved.");
-});
-  /*
-  jsonfile
-    .writeFile(`${dataDir}/${bookFile}.json`, bookObj)
-    .then(() => {
-      console.log(`creating book ${bookFile} json.`);
-    })
-    .catch(err => {
-      console.error(err);
-    });
-  */
+  });
 };
 
 /**

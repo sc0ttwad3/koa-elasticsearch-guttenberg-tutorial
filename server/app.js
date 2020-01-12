@@ -1,10 +1,10 @@
-const dotenv = require('dotenv').config();
-const chalk = require('chalk');
-const Koa = require('koa');
-const Router = require('koa-router');
-const joi = require('joi');
-const validate = require('koa-joi-validate');
-const search = require('./search');
+const dotenv = require("dotenv").config();
+const chalk = require("chalk");
+const Koa = require("koa");
+const Router = require("koa-router");
+const joi = require("joi");
+const validate = require("koa-joi-validate");
+const search = require("./search");
 
 const app = new Koa();
 const router = new Router();
@@ -18,13 +18,13 @@ app.use(async (ctx, next) => {
 });
 
 // Log percolated errors to the console
-app.on('error', err => {
-  console.error('Server Error', err);
+app.on("error", err => {
+  console.error("Server Error", err);
 });
 
 // Set permissive CORS header
 app.use(async (ctx, next) => {
-  ctx.set('Access-Control-Allow-Origin', '*');
+  ctx.set("Access-Control-Allow-Origin", "*");
   return next();
 });
 
@@ -34,7 +34,7 @@ app.use(async (ctx, next) => {
  */
 // @ts-ignore
 router.get(
-  '/search',
+  "/search",
   // @ts-ignore
   validate({
     query: {
@@ -62,6 +62,12 @@ app
   .use(router.routes())
   .use(router.allowedMethods())
   .listen(port, err => {
-    if (err) throw err;
-    console.log(chalk.greenBright(`App Listening on Port ${port}`));
+    if (err) {
+      console.trace(chalk.redBright(error.message));
+      process.exit(1);
+    }
+    // success, display url
+    console.log(chalk.green(`[ ✓ ] server listening on ${port}`));
+    // dim the cancel message
+    console.log(chalk.grey("[Press CTRL-C to stop]"));
   });

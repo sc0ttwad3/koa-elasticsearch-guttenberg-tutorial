@@ -22,14 +22,15 @@ async function checkConnection() {
   let isConnected = false;
   while (!isConnected) {
     console.log("--------------------------------------------");
-    console.log("Connecting to ES...");
+    console.log("\nEstablishing elasticsearch connection...");
     try {
       const health = await client.cluster.health({});
       console.log(health);
       isConnected = true;
       console.log(chalk.greenBright("\n[✓] Connected to ES index..."));
     } catch (err) {
-      console.log(chalk.red("\n[ ] Connection failed."), err);
+      console.trace(chalk.red("\n[ ] Connection failed!\n"), err.message);
+      process.exit(1);
     } finally {
       console.log("--------------------------------------------");
       break;
