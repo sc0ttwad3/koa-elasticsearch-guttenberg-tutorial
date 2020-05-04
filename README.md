@@ -14,7 +14,7 @@
 
 ### 🏠 [Homepage](https://github.com/sc0ttwad3/koa-elasticsearch-guttenberg-tutorial#readme)
 
-> Vue-based front-end and node/koa service for full-text searching elasticsearch/kibana indexed Gutenberg Project literary works.
+> Vue portal to node/koa service for full-text searching elasticsearch/kibana indexed Gutenberg Project literary works.
 
 > Made with lots of ☕️ by sc0ttwad3
 
@@ -24,9 +24,9 @@
 npm install
 ```
 
-### Elasticsearch
+### elasticsearch/kibana
 
-Use docker-compose to spin up elasticsearch/kibana/node app with persistent storage.
+Use `docker-compose.yaml` to spin up elasticsearch/kibanan with persistent storage and node app.
 
 ```sh
 docker-compose up # down to tear down
@@ -42,7 +42,7 @@ First create an index for the books and verify it is listed as one of the indice
 green open books  plTl1SD0QUCRTvWOFLOLsw 1 1 0 0   460b   230b
 ```
 
-The field properties/mappings for a book entry:
+The field mappings for book entries in `book-mappings.json`:
 
 ```json
 {
@@ -70,7 +70,7 @@ To create the elasticsearch index mappings:
 $ curl -d "@book-mappings.json" -H 'Content-Type: application/json' -X PUT "localhost:9200/books/_mappings"
 ```
 
-Or in Kibana DevTools use `PUT /books/_mappings` and then the contents of the book-mappings.json
+(or use kibana devtools to `PUT /books/_mappings` and paste contents of book-mappings.json
 
 ### Usage
 
@@ -86,7 +86,7 @@ npm run test
 
 ### Author
 
-👤 **Scott Wade <sc0ttwad3@gmail.com> (http://sc0ttwad3.com)**
+👤 **Scott Wade <<sc0ttwad3@gmail.com>> (http://sc0ttwad3.com)**
 
 - Website: sc0ttwad3.com
 - Github: [@sc0ttwad3](https://github.com/sc0ttwad3)
