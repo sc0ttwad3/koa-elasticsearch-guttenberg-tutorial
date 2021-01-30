@@ -26,6 +26,7 @@ services:
     environment:
       ELASTICSEARCH_URL: http://es01:9200
       ELASTICSEARCH_HOSTS: http://es01:9200
+      enterpriseSearch.host: 'http://localhost:3002'
     ports:
       - 5601:5601
     networks:
@@ -42,7 +43,7 @@ services:
       - elasticsearch.username=elastic
       - elasticsearch.password=68gunsh1p
       - allow_es_settings_modification=true
-      - secret_management.encryption_keys='[t7w9z$C&F)J@NcRfUjXn2r5u8x/A%D*G]'
+      - secret_management.encryption_keys=[t7w9z$C&F)J@NcRfUjXn2r5u8x/A%D*G]
       - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
     volumes:
       - enterprise01:/usr/share/elasticsearch_enterprisesearch/data
