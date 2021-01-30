@@ -31,8 +31,30 @@ services:
     networks:
       - esnet
 
+
+  enterprise01:
+    image: docker.elastic.co/enterprise-search/enterprise-search:7.10.2
+    container_name: enterprise01
+    depends_on:
+      - es01
+    environment:
+      - elasticsearch.host='http://host.docker.internal:9200'
+      - elasticsearch.username=elastic
+      - elasticsearch.password=68gunsh1p
+      - allow_es_settings_modification=true
+      - secret_management.encryption_keys='[t7w9z$C&F)J@NcRfUjXn2r5u8x/A%D*G]'
+      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
+    volumes:
+      - enterprise01:/usr/share/elasticsearch_enterprisesearch/data
+    ports:
+      - 3002:3002
+    networks:
+      - esnet
+
 volumes:
   esdata01:
+    driver: local
+  enterprise01:
     driver: local
 
 networks:
