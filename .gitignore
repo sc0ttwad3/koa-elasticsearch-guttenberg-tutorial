@@ -21,5 +21,6 @@ books
 
 *.orig
 
-esdesksearch01-encryption-key.txt
+secret-session-key.txt
+
 
