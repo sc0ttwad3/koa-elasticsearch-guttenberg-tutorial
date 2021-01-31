@@ -26,7 +26,7 @@ services:
     environment:
       ELASTICSEARCH_URL: http://es01:9200
       ELASTICSEARCH_HOSTS: http://es01:9200
-      enterpriseSearch.host: 'http://localhost:3002'
+      enterpriseSearch.host: http://host.docker.iternal:3002
     ports:
       - 5601:5601
     networks:
@@ -36,17 +36,16 @@ services:
   enterprise01:
     image: docker.elastic.co/enterprise-search/enterprise-search:7.10.2
     container_name: enterprise01
-    depends_on:
-      - es01
     environment:
-      - elasticsearch.host='http://host.docker.internal:9200'
-      - elasticsearch.username=elastic
-      - elasticsearch.password=68gunsh1p
-      - allow_es_settings_modification=true
-      - secret_management.encryption_keys=[t7w9z$C&F)J@NcRfUjXn2r5u8x/A%D*G]
-      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
+      xpack.security.enabled: 'true'
+      xpack.security.authc.api_key.enabled: 'true'
+      elasticsearch.host: http://host.docker.internal:9200
+      elasticsearch.username: elastic
+      elasticsearch.password: 68gunsh1p
+      allow_es_settings_modification: 'true'
+      secret_management.encryption_keys: '[t7w9z$C&F)J@NcRfUjXn2r5u8x/A%D*G]'
     volumes:
-      - enterprise01:/usr/share/elasticsearch_enterprisesearch/data
+      - enterprise01:/usr/share/enterprise-search/data
     ports:
       - 3002:3002
     networks:
